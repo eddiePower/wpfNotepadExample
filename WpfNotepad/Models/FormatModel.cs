@@ -41,7 +41,7 @@ namespace WpfNotepad.Models
                 /* Set isWrapped to value if its == to 
                  * wrap set true else set false.
                 */
-                isWrapped = value == TextWrapping.Wrap ? true : false;
+                 _isWrapped = value == TextWrapping.Wrap ? true : false;
             }
 
         }

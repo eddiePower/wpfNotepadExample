@@ -24,5 +24,15 @@ namespace WpfNotepad
         {
             InitializeComponent();
         }
+
+        private void Calendar_Initialized(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Calendar_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
+
+        }
     }
 }
