@@ -23,17 +23,25 @@ namespace WpfNotepad.ViewModels
         public FileViewModel(DocumentModel document)
         {
             Document = document;
+            NewCommand = new RelayCommand(NewFile);
+            SaveCommand = new RelayCommand(SaveFile);
+            SaveAsCommand = new RelayCommand(SaveFileAs);
+            OpenCommand = new RelayCommand(OpenFile);
         }
 
         public void NewFile()
         {
-            Document.FileName = string.Empty;
-            Document.FilePath = string.Empty;
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string path2 = $"{path}\\EddiesNotePad\\";
+            if(!Directory.Exists(path2)) Directory.CreateDirectory(path2);
+            Document.FileName = "NewDocument.txt";
+            Document.FilePath = path2;
             Document.Text = string.Empty;
         }
 
         private void SaveFile()
         {
+            if (Document.Text == "") Document.Text = " ";
             File.WriteAllText(Document.FilePath, Document.Text);
         }
 
@@ -53,7 +61,6 @@ namespace WpfNotepad.ViewModels
         private void OpenFile()
         {
             var openFileDialogue = new OpenFileDialog();
-
             if (openFileDialogue.ShowDialog() == true)
             {
                 DockFile(openFileDialogue);
@@ -61,18 +68,11 @@ namespace WpfNotepad.ViewModels
             }
         }
 
-        //
+        //Generic FileDialog for the 4 different ones needed.
         private void DockFile<T>(T dialog) where T : FileDialog
         {
             Document.FilePath = dialog.FileName;
             Document.FileName = dialog.SafeFileName;
         }
-
-       /* private void DockFile(FileDialog fileDialogue)
-        {
-            Document.FilePath = fileDialogue.FileName;
-            Document.FileName = fileDialogue.SafeFileName;          
-        }*/
-
     }
 }
